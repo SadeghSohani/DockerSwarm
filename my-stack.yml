@@ -10,8 +10,6 @@ services:
       replicas: 2
     networks:
       - e2e
-    volumes:
-      - services:/var/lib/mysql
   analyze:
     image: ghazals1121/swarm_phase3
     ports:
@@ -21,8 +19,6 @@ services:
       mode: replicated
     networks:
       - e2e
-    volumes:
-      - services:/var/lib/mysql
   visualizer:
     image: dockersamples/visualizer:stable
     ports:
@@ -32,8 +28,6 @@ services:
       mode: replicated
     networks:
       - e2e
-    volumes:
-      - services:/var/lib/mysql
 
 networks:
   e2e:
@@ -41,7 +35,3 @@ networks:
       driver: default
       config:
         - subnet: 172.28.0.0/16
-
-volumes:
-  services :
-    
