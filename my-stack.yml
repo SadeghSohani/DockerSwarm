@@ -1,0 +1,47 @@
+version: '3.7'
+
+services:
+  central:
+    image: ghazals1121/swarm_phase2:main
+    ports:
+      - 8000:8000
+    deploy:
+      mode: replicated
+      replicas: 2
+    networks:
+      - e2e
+    volumes:
+      - services:/var/lib/mysql
+  analyze:
+    image: ghazals1121/swarm_phase3
+    ports:
+      - 8002:8002
+    deploy:
+      replicas: 2
+      mode: replicated
+    networks:
+      - e2e
+    volumes:
+      - services:/var/lib/mysql
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - 8001:8001
+    deploy:
+      replicas: 1
+      mode: replicated
+    networks:
+      - e2e
+    volumes:
+      - services:/var/lib/mysql
+
+networks:
+  e2e:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
+
+volumes:
+  services :
+    
